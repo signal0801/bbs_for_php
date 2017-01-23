@@ -5,27 +5,30 @@ $db_name = 'bbs_db';
 $db_user = 'user';
 $db_pass = 'user';
 
+
 //connect database
 $dblink = mysqli_connect( $db_host, $db_user, $db_pass, $db_name);
 if ($dblink !== false) {
-        $msg     = "";
-            $err_msg = "";
+    $msg     = "";
+    $err_msg = "";
+    $date = new DateTime();
 
     if ( isset( $_POST['send'] ) === true ) {
         $name = $_POST['name']   ;
         $comment = $_POST['comment'];
 
         if ( $name !== '' && $comment !== '' ) {
-
             $query = " INSERT INTO board ( "
                 . "    name , "
-                . "    comment "
+                . "    comment, "
+                . "    date   "
                 . " ) VALUES ( "
-                . "'" . mysqli_real_escape_string( $dblink, $name ) ."', "
-                . "'" . mysqli_real_escape_string( $dblink, $comment ) . "'"
+                . "'" . mysqli_real_escape_string($dblink, $name) ."', "
+                . "'" . mysqli_real_escape_string($dblink, $comment) . "', "
+                ."'" . mysqli_real_escape_string($dblink, $date->format('Y-m-d H:i:s')) . "'"
                 ." ) ";
 
-            $res   = mysqli_query( $dblink, $query);
+            $res   = mysqli_query($dblink, $query);
 
             if ($res === true) {
                 $msg = '書き込みに成功しました';
@@ -37,12 +40,12 @@ if ($dblink !== false) {
         }
     }
 
-            $query  = "SELECT id, name, comment FROM board";
-            $res    = mysqli_query($dblink, $query);
-                $data = array();
-                while($row = mysqli_fetch_assoc($res)) {
-                            array_push($data, $row);
-                                }
+    $query  = "SELECT id, name, comment date FROM board";
+    $res    = mysqli_query($dblink, $query);
+    $data = array();
+    while($row = mysqli_fetch_assoc($res)) {
+        array_push($data, $row);
+    }
     arsort($data);
 
 } else {
