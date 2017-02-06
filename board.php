@@ -23,7 +23,8 @@ if ( $msg     !== '' ) echo '<p>' . $msg . '</p>';
 if ( $err_msg !== '' ) echo '<p style="color:#f00;">' . $err_msg . '</p>';
 foreach( $data as $key => $val ){
     echo '<div>'.$val['name']."さんのコメント". ' ';
-    echo $val['date'].'<br>';
+    $date = new DateTime($val['date']);
+    echo $date->format("Y-m-d H:i:s"). "<br>";
     echo $val['comment'].'<br></div>';
 }
 ?>

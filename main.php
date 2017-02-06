@@ -40,7 +40,7 @@ if ($dblink !== false) {
         }
     }
 
-    $query  = "SELECT id, name, comment date FROM board";
+    $query  = "SELECT id, name, comment, date FROM board";
     $res    = mysqli_query($dblink, $query);
     $data = array();
     while($row = mysqli_fetch_assoc($res)) {
